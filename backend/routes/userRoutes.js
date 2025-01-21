@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
@@ -23,15 +24,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Nodemailer transporter configuration (use environment variables for sensitive data)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER, // Use your email from environment variables
-    pass: process.env.GMAIL_PASS, // Use your Gmail App password
-  },
-  secure: false, // Use TLS for port 587 (not SSL)
-  port: 587,      // Use port 587 (STARTTLS)
+// Nodemailer transporter configuration (use environment variables for sensitive data) 
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587, // Use port 587 for STARTTLS
+    secure: false, // false for STARTTLS
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },  
   tls: {
     rejectUnauthorized: false,  // This might help bypass SSL verification issues
   },
